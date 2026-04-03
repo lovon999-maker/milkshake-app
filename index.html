@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="mn">
 <head>
 <meta charset="UTF-8">
@@ -124,7 +123,6 @@ textarea{resize:none}
 <body>
 
 <!-- HOME -->
-
 <div class="page active" id="page-home">
   <header>
     <div class="header-title">🥤 Milkshake Ultimate</div>
@@ -175,7 +173,6 @@ textarea{resize:none}
 </div>
 
 <!-- FAVS -->
-
 <div class="page" id="page-favs">
   <header><div class="header-title">❤️ Дуртай Жорууд</div></header>
   <div class="container">
@@ -185,7 +182,6 @@ textarea{resize:none}
 </div>
 
 <!-- MINE -->
-
 <div class="page" id="page-mine">
   <header>
     <div style="display:flex;justify-content:space-between;align-items:center">
@@ -200,7 +196,6 @@ textarea{resize:none}
 </div>
 
 <!-- CALC -->
-
 <div class="page" id="page-calc">
   <header><div class="header-title">🧮 Тооцоолуур</div></header>
   <div class="container">
@@ -226,7 +221,6 @@ textarea{resize:none}
 </div>
 
 <!-- NAV -->
-
 <nav class="nav">
   <button class="nb active" id="nav-home" onclick="gP('home')"><span class="ni">🏠</span><span class="nl">Нүүр</span></button>
   <button class="nb" id="nav-favs" onclick="gP('favs')"><span class="ni">❤️</span><span class="nl">Дуртай</span></button>
@@ -235,7 +229,6 @@ textarea{resize:none}
 </nav>
 
 <!-- RECIPE MODAL -->
-
 <div class="ov" id="RO" onclick="cRM(event)">
   <div class="modal">
     <div class="hndl"></div>
@@ -252,7 +245,6 @@ textarea{resize:none}
 </div>
 
 <!-- ADD FORM MODAL -->
-
 <div class="aov" id="AO" onclick="cAM(event)">
   <div class="amodal">
     <div class="hndl"></div>
@@ -419,18 +411,16 @@ let iC=0;
 function aIR(i={name:'',amount:'',unit:'мл'}){const id='i'+(++iC);const d=document.createElement('div');d.className='irow';d.id=id;const val=i.name?(i.name+(i.amount?' – '+i.amount+(i.unit?' '+i.unit:''):'')):'';d.innerHTML=`<input type="text" placeholder="Жш: Сүү – 200 мл" value="${val}"><button class="dbtn" onclick="document.getElementById('${id}').remove()">✕</button>`;document.getElementById('IR').appendChild(d);}
 let sC=0;
 function aSR(t=''){const id='s'+(++sC);const d=document.createElement('div');d.className='strow';d.id=id;const n=document.getElementById('SR').children.length+1;d.innerHTML=`<div class="stnb">${n}</div><textarea rows="2" placeholder="Алхам ${n}...">${t}</textarea><button class="dbtn" onclick="document.getElementById('${id}').remove()">✕</button>`;document.getElementById('SR').appendChild(d);}
-
-function saveR(){const name=document.getElementById(‘fN’).value.trim();if(!name){document.getElementById(‘fN’).style.borderColor=’#e6634a’;return;}document.getElementById(‘fN’).style.borderColor=’’;const ings=[…document.querySelectorAll(’#IR .irow’)].map(row=>{const v=row.querySelector(‘input’).value.trim();if(!v)return null;const parts=v.split(’–’).map(s=>s.trim());const name=parts[0]||v;const rest=parts[1]||’’;const m=rest.match(/^([\d.]+)?\s*(.*)$/);return{name,amount:parseFloat(m&&m[1])||0,unit:(m&&m[2])||‘мл’};}).filter(i=>i&&i.name);const steps=[…document.querySelectorAll(’#SR textarea’)].map(t=>t.value.trim()).filter(Boolean);const rec={id:eId||(‘u’+Date.now()),emoji:sEm,name,cat:sCv,time:document.getElementById(‘fTm’).value.trim()||’–’,kcal:parseInt(document.getElementById(‘fK’).value)||0,tags:[‘Миний жор’,‘⭐’],img:curPhoto||‘https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=60’,ingredients:ings.length?ings:[{name:‘Материал нэмээгүй’,amount:0,unit:’’}],steps:steps.length?steps:[‘Алхам нэмээгүй’],tips:document.getElementById(‘fTP’).value.trim()||’’};if(eId){const idx=myR.findIndex(r=>r.id===eId);if(idx>=0)myR[idx]=rec;}else myR.unshift(rec);sM();rMine();cAO();toast(eId?‘✅ Жор шинэчлэгдлээ!’:‘🎉 Жор нэмэгдлээ!’);}
+function saveR(){const name=document.getElementById('fN').value.trim();if(!name){document.getElementById('fN').style.borderColor='#e6634a';return;}document.getElementById('fN').style.borderColor='';const ings=[...document.querySelectorAll('#IR .irow')].map(row=>{const v=row.querySelector('input').value.trim();if(!v)return null;const parts=v.split('–').map(s=>s.trim());const name=parts[0]||v;const rest=parts[1]||'';const m=rest.match(/^([\d.]+)?\s*(.*)$/);return{name,amount:parseFloat(m&&m[1])||0,unit:(m&&m[2])||'мл'};}).filter(i=>i&&i.name);const steps=[...document.querySelectorAll('#SR textarea')].map(t=>t.value.trim()).filter(Boolean);const rec={id:eId||('u'+Date.now()),emoji:sEm,name,cat:sCv,time:document.getElementById('fTm').value.trim()||'–',kcal:parseInt(document.getElementById('fK').value)||0,tags:['Миний жор','⭐'],img:curPhoto||'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=60',ingredients:ings.length?ings:[{name:'Материал нэмээгүй',amount:0,unit:''}],steps:steps.length?steps:['Алхам нэмээгүй'],tips:document.getElementById('fTP').value.trim()||''};if(eId){const idx=myR.findIndex(r=>r.id===eId);if(idx>=0)myR[idx]=rec;}else myR.unshift(rec);sM();rMine();cAO();toast(eId?'✅ Жор шинэчлэгдлээ!':'🎉 Жор нэмэгдлээ!');}
 function eR(id){const r=myR.find(x=>x.id===id);if(r)openAdd(r);}
-function dR(id){if(!confirm(‘Устгах уу?’))return;myR=myR.filter(r=>r.id!==id);sM();rMine();toast(‘🗑 Устгагдлаа’);}
-function calcSize(){const p=parseInt(document.getElementById(‘cP’).value)||1,m=parseInt(document.getElementById(‘cM’).value)||0,ic=parseInt(document.getElementById(‘cI’).value)||0,f=parseInt(document.getElementById(‘cF’).value)||0,el=document.getElementById(‘CR’);el.style.display=‘block’;el.innerHTML=`🥛 Сүү: <strong>${m*p} мл</strong><br>🍨 Зайрмаг: <strong>${ic*p} г</strong><br>🍓 Жимс: <strong>${f*p} г</strong><br>👥 Хүн: <strong>${p}</strong>`;}
-function calcNut(){const m=parseInt(document.getElementById(‘nM’).value)||0,ic=parseInt(document.getElementById(‘nI’).value)||0,f=parseInt(document.getElementById(‘nF’).value)||0,s=parseInt(document.getElementById(‘nS’).value)||0,k=Math.round(m*0.61+ic*2.1+f*0.6+s*2.6),pr=(m*0.033+ic*0.035).toFixed(1),fa=(m*0.032+ic*0.11).toFixed(1),ca=(m*0.047+ic*0.23+f*0.12+s*0.7).toFixed(1),el=document.getElementById(‘NR’);el.style.display=‘block’;el.innerHTML=`🔥 Илчлэг: <strong>${k} ккал</strong><br>💪 Уураг: <strong>${pr} г</strong><br>🧈 Өөх тос: <strong>${fa} г</strong><br>🍞 Нүүрс ус: <strong>${ca} г</strong>`;}
-function gP(p){document.querySelectorAll(’.page’).forEach(x=>x.classList.remove(‘active’));document.querySelectorAll(’.nb’).forEach(b=>b.classList.remove(‘active’));document.getElementById(‘page-’+p).classList.add(‘active’);document.getElementById(‘nav-’+p).classList.add(‘active’);if(p===‘favs’)rFavs();if(p===‘mine’)rMine();}
-function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.style.opacity=‘1’;clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity=‘0’,2200);}
-const mf={name:‘Milkshake’,short_name:‘Milkshake’,display:‘standalone’,start_url:’./’,background_color:’#f0e6d8’,theme_color:’#e6634a’,icons:[{src:“data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23e6634a'/><text y='140' x='16' font-size='140'>🥤</text></svg>”,sizes:‘192x192’,type:‘image/svg+xml’}]};
-const mb=new Blob([JSON.stringify(mf)],{type:‘application/json’}),ml=document.createElement(‘link’);ml.rel=‘manifest’;ml.href=URL.createObjectURL(mb);document.head.appendChild(ml);
-rFeat();rGrid(R,‘RG’);
+function dR(id){if(!confirm('Устгах уу?'))return;myR=myR.filter(r=>r.id!==id);sM();rMine();toast('🗑 Устгагдлаа');}
+function calcSize(){const p=parseInt(document.getElementById('cP').value)||1,m=parseInt(document.getElementById('cM').value)||0,ic=parseInt(document.getElementById('cI').value)||0,f=parseInt(document.getElementById('cF').value)||0,el=document.getElementById('CR');el.style.display='block';el.innerHTML=`🥛 Сүү: <strong>${m*p} мл</strong><br>🍨 Зайрмаг: <strong>${ic*p} г</strong><br>🍓 Жимс: <strong>${f*p} г</strong><br>👥 Хүн: <strong>${p}</strong>`;}
+function calcNut(){const m=parseInt(document.getElementById('nM').value)||0,ic=parseInt(document.getElementById('nI').value)||0,f=parseInt(document.getElementById('nF').value)||0,s=parseInt(document.getElementById('nS').value)||0,k=Math.round(m*0.61+ic*2.1+f*0.6+s*2.6),pr=(m*0.033+ic*0.035).toFixed(1),fa=(m*0.032+ic*0.11).toFixed(1),ca=(m*0.047+ic*0.23+f*0.12+s*0.7).toFixed(1),el=document.getElementById('NR');el.style.display='block';el.innerHTML=`🔥 Илчлэг: <strong>${k} ккал</strong><br>💪 Уураг: <strong>${pr} г</strong><br>🧈 Өөх тос: <strong>${fa} г</strong><br>🍞 Нүүрс ус: <strong>${ca} г</strong>`;}
+function gP(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.getElementById('nav-'+p).classList.add('active');if(p==='favs')rFavs();if(p==='mine')rMine();}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',2200);}
+const mf={name:'Milkshake',short_name:'Milkshake',display:'standalone',start_url:'./',background_color:'#f0e6d8',theme_color:'#e6634a',icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23e6634a'/><text y='140' x='16' font-size='140'>🥤</text></svg>",sizes:'192x192',type:'image/svg+xml'}]};
+const mb=new Blob([JSON.stringify(mf)],{type:'application/json'}),ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(mb);document.head.appendChild(ml);
+rFeat();rGrid(R,'RG');
 </script>
-
 </body>
 </html>
