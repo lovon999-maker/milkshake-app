@@ -1,117 +1,435 @@
 <!DOCTYPE html>
+
 <html lang="mn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Milkshake Ultimate</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #e9dfd4;
-    }
-
-    header {
-      background: #e6634a;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .container {
-      padding: 15px;
-    }
-
-    .card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    }
-
-    .btn {
-      background: #e6634a;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    img {
-      width: 100%;
-      border-radius: 12px;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#e6634a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Milkshake">
+<title>🥤 Milkshake Ultimate</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Outfit',sans-serif;background:#f0e6d8;max-width:480px;margin:0 auto;padding-bottom:80px;min-height:100vh}
+header{background:#e6634a;color:#fff;padding:52px 20px 18px;text-align:center}
+.header-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;letter-spacing:1px}
+.header-sub{font-size:12px;opacity:0.75;letter-spacing:2px;margin-top:3px}
+.container{padding:14px}
+.card{background:#fff;padding:16px;border-radius:18px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#3d1f0d;margin-bottom:12px}
+.btn{background:#e6634a;color:#fff;border:none;padding:12px;width:100%;border-radius:12px;margin-top:10px;font-size:15px;font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;transition:opacity 0.15s}
+.btn:active{opacity:0.85}
+.btn-outline{background:transparent;border:2px solid #e6634a;color:#e6634a}
+input,select,textarea{width:100%;padding:11px 13px;margin-top:8px;border-radius:11px;border:1.5px solid #e0d0c0;font-family:'Outfit',sans-serif;font-size:14px;background:#faf6f2;color:#3d1f0d;outline:none;transition:border-color 0.2s;box-sizing:border-box}
+input:focus,select:focus,textarea:focus{border-color:#e6634a}
+textarea{resize:none}
+#preview{width:100%;border-radius:12px;margin-top:10px;display:none;max-height:200px;object-fit:cover}
+.cam-label{display:block;width:100%;background:#fff5f2;border:2px dashed #e6634a;border-radius:12px;padding:14px;text-align:center;font-size:14px;color:#e6634a;cursor:pointer;margin-top:8px;font-family:'Outfit',sans-serif}
+#calResult{margin-top:10px;padding:12px;background:#fff5f2;border-radius:11px;font-size:15px;color:#3d1f0d;display:none;text-align:center}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:12px}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex-shrink:0;background:#f0e6d8;border:none;border-radius:50px;padding:7px 15px;font-size:12px;font-weight:500;color:#7a4530;cursor:pointer;white-space:nowrap;transition:all 0.15s}
+.cat.active{background:#e6634a;color:#fff;font-weight:600}
+.feat-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin-bottom:4px}
+.feat-row::-webkit-scrollbar{display:none}
+.fc{flex-shrink:0;width:170px;background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.09);transition:transform 0.15s;position:relative}
+.fc:active{transform:scale(0.96)}
+.fc-img{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:58px}
+.fc-body{padding:9px 11px 11px}
+.fc-name{font-family:'Cormorant Garamond',serif;font-size:15px;color:#3d1f0d;line-height:1.2;margin-bottom:3px}
+.fc-meta{font-size:10px;color:#b89a6a;display:flex;gap:6px}
+.fc-badge{position:absolute;top:8px;left:8px;background:#e6634a;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px}
+.fc-fav{position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.85);border:none;border-radius:50%;width:27px;height:27px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.rc:last-child:nth-child(odd){grid-column:span 2;max-width:50%;margin:0 auto}
+.rc{background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.08);transition:transform 0.15s;position:relative}
+.rc:active{transform:scale(0.96)}
+.rc-img{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}
+.rc-b{padding:9px 11px 11px}
+.rc-name{font-family:'Cormorant Garamond',serif;font-size:14px;color:#3d1f0d;margin-bottom:3px;line-height:1.25}
+.rc-meta{font-size:10px;color:#b89a6a;display:flex;gap:6px}
+.rc-fav{position:absolute;top:7px;right:7px;background:rgba(255,255,255,0.85);border:none;border-radius:50%;width:26px;height:26px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:2px solid #f0e6d8;display:flex;padding:8px 0 env(safe-area-inset-bottom,8px);z-index:100}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:4px}
+.ni{font-size:20px}.nl{font-size:10px;color:#ccc;font-weight:500}
+.nb.active .nl{color:#e6634a}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.ov.open{opacity:1;pointer-events:all}
+.modal{background:#faf6f2;border-radius:24px 24px 0 0;width:100%;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1)}
+.ov.open .modal{transform:translateY(0)}
+.hndl{width:36px;height:4px;background:#ddd;border-radius:2px;margin:13px auto 0}
+.mi{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:90px;margin-top:13px;border-radius:0}
+.mb{padding:16px 18px 30px}
+.mt{font-family:'Cormorant Garamond',serif;font-size:27px;color:#3d1f0d;margin-bottom:8px}
+.mtags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.tag{background:#fff5f2;color:#e6634a;font-size:11px;padding:3px 11px;border-radius:50px;border:1px solid #fdd0c4}
+.sbar{background:#fff;border-radius:13px;padding:11px 15px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.sl{font-size:13px;color:#7a4530}
+.sc{display:flex;align-items:center;gap:12px}
+.sb{width:30px;height:30px;border-radius:50%;background:#e6634a;color:#fff;border:none;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sn{font-family:'Cormorant Garamond',serif;font-size:24px;color:#3d1f0d;min-width:20px;text-align:center}
+.mlbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#b89a6a;margin-bottom:9px;font-weight:500}
+.ings{display:flex;flex-direction:column;gap:5px}
+.ii{background:#fff;border-radius:11px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.in{font-size:13px;color:#3d1f0d}.ia{font-size:13px;font-weight:600;color:#e6634a;background:#fff5f2;padding:3px 9px;border-radius:50px}
+.steps{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+.step{display:flex;gap:11px;align-items:flex-start}
+.stn{width:27px;height:27px;border-radius:50%;background:#e6634a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.stt{font-size:13px;line-height:1.7;color:#7a4530;padding-top:3px}
+.tips{background:#fff5f2;border:1px solid #fdd0c4;border-radius:13px;padding:13px;margin-top:16px}
+.tt{font-size:10px;font-weight:600;color:#e6634a;margin-bottom:4px;letter-spacing:1px}
+.tb{font-size:13px;color:#7a4530;line-height:1.65}
+.aov{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.aov.open{opacity:1;pointer-events:all}
+.amodal{background:#faf6f2;border-radius:24px 24px 0 0;width:100%;max-height:95vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1)}
+.aov.open .amodal{transform:translateY(0)}
+.fhead{padding:14px 18px 0;display:flex;justify-content:space-between;align-items:center}
+.ftit{font-family:'Cormorant Garamond',serif;font-size:21px;color:#3d1f0d}
+.fcls{background:#f0e6d8;border:none;border-radius:50%;width:30px;height:30px;color:#7a4530;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.fsec{padding:11px 18px 0}
+.flbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#b89a6a;margin-bottom:7px;font-weight:500}
+.fcats{display:flex;flex-wrap:wrap;gap:5px}
+.fcat{background:#f0e6d8;border:none;border-radius:50px;padding:5px 13px;font-size:12px;font-weight:500;color:#7a4530;cursor:pointer;transition:all 0.13s}
+.fcat.active{background:#e6634a;color:#fff}
+.egrid{display:flex;flex-wrap:wrap;gap:5px}
+.eopt{width:37px;height:37px;border-radius:9px;border:1.5px solid #e0d0c0;font-size:20px;cursor:pointer;background:#fff;display:flex;align-items:center;justify-content:center;transition:all 0.13s}
+.eopt.sel{border-color:#e6634a;background:#fff5f2}
+.irow{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.irow input{border:1.5px solid #e0d0c0;border-radius:11px;padding:12px 14px;font-family:'Outfit',sans-serif;font-size:15px;color:#3d1f0d;outline:none;background:#fff;margin-top:0;flex:1}
+.irow input:focus{border-color:#e6634a}
+.irow input::placeholder{color:#c4a882}
+.irow .dbtn{flex-shrink:0}
+.dbtn{background:none;border:none;font-size:15px;cursor:pointer;color:#ddd;padding:3px;flex-shrink:0}
+.arb{background:#fff5f2;color:#e6634a;border:1px solid #fdd0c4;border-radius:50px;padding:5px 13px;font-size:12px;font-family:'Outfit',sans-serif;font-weight:500;cursor:pointer}
+.strow{display:flex;gap:7px;margin-bottom:7px;align-items:flex-start}
+.stnb{width:25px;height:25px;border-radius:50%;background:#e6634a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:6px}
+.strow textarea{flex:1;border:1.5px solid #e0d0c0;border-radius:9px;padding:8px 11px;font-family:'Outfit',sans-serif;font-size:13px;color:#3d1f0d;outline:none;resize:none;background:#fff;margin-top:0}
+.strow textarea:focus{border-color:#e6634a}
+.cam-lbl{display:block;width:100%;background:#fff5f2;border:2px dashed #e6634a;border-radius:12px;padding:13px;text-align:center;font-size:14px;color:#e6634a;cursor:pointer;margin-top:8px;font-family:'Outfit',sans-serif}
+#fprev{width:100%;border-radius:12px;margin-top:8px;display:none;max-height:180px;object-fit:cover}
+.page{display:none}.page.active{display:block}
+.empty{text-align:center;padding:50px 28px}
+.eico{font-size:52px;margin-bottom:14px}
+.etit{font-family:'Cormorant Garamond',serif;font-size:22px;color:#3d1f0d;margin-bottom:7px}
+.esub{font-size:13px;color:#b89a6a}
+.macts{display:flex;gap:5px;padding:0 11px 11px}
+.mact{flex:1;background:#f0e6d8;border:none;border-radius:7px;padding:6px 0;font-size:11px;font-family:'Outfit',sans-serif;color:#7a4530;cursor:pointer}
+.mact.del{color:#e6634a}
+#toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:#e6634a;color:#fff;padding:9px 20px;border-radius:50px;font-size:13px;font-weight:600;font-family:'Outfit',sans-serif;z-index:999;opacity:0;transition:opacity 0.25s;white-space:nowrap;pointer-events:none}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.rc{animation:fu 0.3s ease both}
+</style>
 </head>
-
 <body>
 
-<header>🥤 Milkshake Ultimate</header>
+<!-- HOME -->
 
-<div class="container">
-
-  <!-- CAMERA -->
-  <div class="card">
-    <h3>📸 Зураг авах</h3>
-
-    <input type="file" accept="image/*" capture="environment" id="cameraInput">
-
-    <img id="preview">
+<div class="page active" id="page-home">
+  <header>
+    <div class="header-title">🥤 Milkshake Ultimate</div>
+    <div class="header-sub">АМТТАЙ ЦАГИЙГ ЭХЛҮҮЛЬЕ</div>
+  </header>
+  <div class="container">
+    <!-- CAMERA CARD -->
+    <div class="card">
+      <div class="card-title">📸 Зураг авах</div>
+      <label class="cam-lbl" for="camMain">📷 Камер нээх / галерей</label>
+      <input type="file" id="camMain" accept="image/*" capture="environment" style="display:none">
+      <img id="prevMain">
+    </div>
+    <!-- CALORIE CARD -->
+    <div class="card">
+      <div class="card-title">🔥 Calories тооцох</div>
+      <select id="calType">
+        <option value="450">🍫 Chocolate – 450 kcal</option>
+        <option value="300">🍓 Strawberry – 300 kcal</option>
+        <option value="320">🍌 Banana – 320 kcal</option>
+        <option value="280">🫐 Berry – 280 kcal</option>
+        <option value="310">🥭 Mango – 310 kcal</option>
+        <option value="340">☕ Coffee – 340 kcal</option>
+        <option value="380">🍦 Vanilla – 380 kcal</option>
+        <option value="520">🥜 Peanut Butter – 520 kcal</option>
+      </select>
+      <button class="btn" onclick="calcCal()">Тооцох</button>
+      <div id="calResult"></div>
+    </div>
+    <!-- FEATURED -->
+    <div class="card-title" style="margin:4px 0 10px">⭐ Онцлох жорууд</div>
+    <div class="feat-row" id="FG"></div>
+    <!-- CATS -->
+    <div class="cats" id="CL" style="margin-top:14px">
+      <button class="cat active" data-cat="all" onclick="fC(this)">✨ Бүгд</button>
+      <button class="cat" data-cat="classic" onclick="fC(this)">🍦 Сонгодог</button>
+      <button class="cat" data-cat="fruity" onclick="fC(this)">🍓 Жимс</button>
+      <button class="cat" data-cat="choco" onclick="fC(this)">🍫 Шоколад</button>
+      <button class="cat" data-cat="coffee" onclick="fC(this)">☕ Кофе</button>
+      <button class="cat" data-cat="protein" onclick="fC(this)">💪 Протейн</button>
+      <button class="cat" data-cat="exotic" onclick="fC(this)">🌺 Экзотик</button>
+      <button class="cat" data-cat="kids" onclick="fC(this)">🌈 Хүүхэд</button>
+      <button class="cat" data-cat="healthy" onclick="fC(this)">🥗 Эрүүл</button>
+    </div>
+    <div class="card-title" id="AT" style="margin:14px 0 10px">Бүх жор</div>
+    <div class="grid" id="RG"></div>
   </div>
-
-  <!-- CALORIE -->
-  <div class="card">
-    <h3>🔥 Calories тооцох</h3>
-
-    <select id="type">
-      <option value="450">🍫 Chocolate</option>
-      <option value="300">🍓 Strawberry</option>
-      <option value="320">🍌 Banana</option>
-      <option value="280">🫐 Berry</option>
-      <option value="310">🥭 Mango</option>
-    </select>
-
-    <button class="btn" onclick="calc()">Тооцох</button>
-
-    <p id="result"></p>
-  </div>
-
 </div>
 
+<!-- FAVS -->
+
+<div class="page" id="page-favs">
+  <header><div class="header-title">❤️ Дуртай Жорууд</div></header>
+  <div class="container">
+    <div class="grid" id="FVG"></div>
+    <div class="empty" id="FVE" style="display:none"><div class="eico">💔</div><div class="etit">Дуртай жор байхгүй</div><div class="esub">Жорын ❤️ дарж хадгал</div></div>
+  </div>
+</div>
+
+<!-- MINE -->
+
+<div class="page" id="page-mine">
+  <header>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="header-title">✏️ Миний Жорууд</div>
+      <button onclick="openAdd()" style="background:rgba(255,255,255,0.25);border:2px solid rgba(255,255,255,0.5);border-radius:50%;width:38px;height:38px;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">＋</button>
+    </div>
+  </header>
+  <div class="container">
+    <div class="grid" id="MG"></div>
+    <div class="empty" id="ME"><div class="eico">📝</div><div class="etit">Жор байхгүй</div><div class="esub">＋ дарж жор нэм!</div><button class="btn" style="width:auto;padding:11px 26px;margin-top:14px" onclick="openAdd()">＋ Жор нэмэх</button></div>
+  </div>
+</div>
+
+<!-- CALC -->
+
+<div class="page" id="page-calc">
+  <header><div class="header-title">🧮 Тооцоолуур</div></header>
+  <div class="container">
+    <div class="card">
+      <div class="card-title">🥛 Хэмжээ тооцоо</div>
+      <label style="font-size:13px;color:#7a4530">Хэдэн хүн?</label><input id="cP" type="number" value="2" min="1">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Сүү (мл/хүн)</label><input id="cM" type="number" value="200">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Зайрмаг (г/хүн)</label><input id="cI" type="number" value="100">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Жимс (г/хүн)</label><input id="cF" type="number" value="80">
+      <div id="CR" style="display:none;margin-top:12px;padding:12px;background:#fff5f2;border-radius:11px;font-size:13px;color:#3d1f0d;line-height:2"></div>
+      <button class="btn" onclick="calcSize()">✨ Тооцоолох</button>
+    </div>
+    <div class="card">
+      <div class="card-title">🔥 Илчлэг тооцоо</div>
+      <label style="font-size:13px;color:#7a4530">Сүү (мл)</label><input id="nM" type="number" value="200">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Зайрмаг (г)</label><input id="nI" type="number" value="100">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Жимс (г)</label><input id="nF" type="number" value="80">
+      <label style="font-size:13px;color:#7a4530;margin-top:8px;display:block">Сироп (мл)</label><input id="nS" type="number" value="20">
+      <div id="NR" style="display:none;margin-top:12px;padding:12px;background:#fff5f2;border-radius:11px;font-size:13px;color:#3d1f0d;line-height:2"></div>
+      <button class="btn" onclick="calcNut()">🔥 Тооцоолох</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+
+<nav class="nav">
+  <button class="nb active" id="nav-home" onclick="gP('home')"><span class="ni">🏠</span><span class="nl">Нүүр</span></button>
+  <button class="nb" id="nav-favs" onclick="gP('favs')"><span class="ni">❤️</span><span class="nl">Дуртай</span></button>
+  <button class="nb" id="nav-mine" onclick="gP('mine')"><span class="ni">✏️</span><span class="nl">Миний</span></button>
+  <button class="nb" id="nav-calc" onclick="gP('calc')"><span class="ni">🧮</span><span class="nl">Тооцоо</span></button>
+</nav>
+
+<!-- RECIPE MODAL -->
+
+<div class="ov" id="RO" onclick="cRM(event)">
+  <div class="modal">
+    <div class="hndl"></div>
+    <div class="mi" id="mI"></div>
+    <div class="mb">
+      <div class="mt" id="mT"></div>
+      <div class="mtags" id="mTG"></div>
+      <div class="sbar"><span class="sl">🍽 Хэдэн хүн</span><div class="sc"><button class="sb" onclick="cS(-1)">−</button><span class="sn" id="SN">2</span><button class="sb" onclick="cS(1)">+</button></div></div>
+      <div class="mlbl">МАТЕРИАЛ</div><div class="ings" id="mIG"></div>
+      <div class="mlbl" style="margin-top:16px">ХИЙХ АРГА</div><div class="steps" id="mST"></div>
+      <div class="tips" id="mTP"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD FORM MODAL -->
+
+<div class="aov" id="AO" onclick="cAM(event)">
+  <div class="amodal">
+    <div class="hndl"></div>
+    <div class="fhead"><div class="ftit" id="FT">✨ Жор нэмэх</div><button class="fcls" onclick="cAO()">✕</button></div>
+    <div class="fsec"><div class="flbl">Emoji</div><div class="egrid" id="EG"></div></div>
+    <div class="fsec"><div class="flbl">Жорын нэр *</div><input id="fN" type="text" placeholder="Жишээ: Манайх Shake" maxlength="40"></div>
+    <div class="fsec"><div class="flbl">Ангилал</div>
+      <div class="fcats">
+        <button class="fcat active" data-cat="classic" onclick="sCat(this)">🍦 Сонгодог</button>
+        <button class="fcat" data-cat="fruity" onclick="sCat(this)">🍓 Жимс</button>
+        <button class="fcat" data-cat="choco" onclick="sCat(this)">🍫 Шоколад</button>
+        <button class="fcat" data-cat="coffee" onclick="sCat(this)">☕ Кофе</button>
+        <button class="fcat" data-cat="protein" onclick="sCat(this)">💪 Протейн</button>
+        <button class="fcat" data-cat="exotic" onclick="sCat(this)">🌺 Экзотик</button>
+        <button class="fcat" data-cat="kids" onclick="sCat(this)">🌈 Хүүхэд</button>
+        <button class="fcat" data-cat="healthy" onclick="sCat(this)">🥗 Эрүүл</button>
+      </div>
+    </div>
+    <div class="fsec" style="display:flex;gap:10px">
+      <div style="flex:1"><div class="flbl">Хугацаа</div><input id="fTm" type="text" placeholder="5 мин"></div>
+      <div style="flex:1"><div class="flbl">Илчлэг</div><input id="fK" type="number" placeholder="300"></div>
+    </div>
+    <div class="fsec">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <div class="flbl" style="margin:0">МАТЕРИАЛ</div><button class="arb" onclick="aIR()">＋ Нэмэх</button>
+      </div>
+      <div id="IR"></div>
+    </div>
+    <div class="fsec">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+        <div class="flbl" style="margin:0">ХИЙХ АРГА</div><button class="arb" onclick="aSR()">＋ Нэмэх</button>
+      </div>
+      <div id="SR"></div>
+    </div>
+    <div class="fsec"><div class="flbl">Зөвлөгөө</div><textarea id="fTP" rows="2" placeholder="Нууц зөвлөгөө..."></textarea></div>
+    <div class="fsec">
+      <div class="flbl">Зураг (камер / галерей)</div>
+      <label class="cam-lbl" for="fCam">📸 Зураг авах / сонгох</label>
+      <input type="file" id="fCam" accept="image/*" capture="environment" style="display:none">
+      <img id="fprev">
+    </div>
+    <div class="fsec" style="padding-bottom:30px"><button class="btn" onclick="saveR()">💾 Хадгалах</button></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
-  // CAMERA
-  const input = document.getElementById('cameraInput');
-  const preview = document.getElementById('preview');
+const R=[
+  {id:1,cat:'classic',featured:true,badge:'Алдартай',img:'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&q=70',emoji:'🍦',name:'Энгийн Vanilla Shake',time:'3 мин',kcal:280,tags:['Сонгодог','2 орц'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Vanilla зайрмаг',amount:100,unit:'г'},{name:'Мөс',amount:3,unit:'ш'}],steps:['Бүх орцыг blender-д хий.','20–30 секунд сайн бутал.','Аяганд хийж шууд уу.'],tips:'Илүү өтгөн болгох бол зайрмаг нэм.'},
+  {id:2,cat:'choco',featured:true,badge:'🔥 Хит',img:'https://images.unsplash.com/photo-1619221882220-947b3d3c8861?w=500&q=70',emoji:'🍫',name:'Chocolate Milkshake',time:'5 мин',kcal:450,tags:['Шоколад','ТОП 1'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Зайрмаг',amount:60,unit:'г'},{name:'Шоколад сироп',amount:1,unit:'хч'}],steps:['Бүгдийг blender-д хий.','Сайн холиод аяганд хийнэ.','Дээрээс шоколад асгахад бүр амттай.'],tips:'Cocoa-г халуун сүүнд уусгаж хөргөсний дараа блендрэх — бөөн үлдэхгүй.'},
+  {id:3,cat:'fruity',featured:true,badge:'Шинэ',img:'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=500&q=70',emoji:'🍓',name:'Strawberry Milkshake',time:'5 мин',kcal:300,tags:['Жимс','ТОП 2'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Зайрмаг',amount:60,unit:'г'},{name:'Гүзээлзгэнэ',amount:5,unit:'ш'}],steps:['Бүх орцыг blender-д хий.','Сайн хутгаад уу.'],tips:'Мөс их хийвэл усархаг болно ⚠️'},
+  {id:4,cat:'fruity',img:'https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=500&q=70',emoji:'🍌',name:'Banana Milkshake',time:'3 мин',kcal:320,tags:['Жимс','2 орц'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Банана',amount:1,unit:'ш'},{name:'Зайрмаг',amount:50,unit:'г'}],steps:['Banana + сүүг blender-д хий.','Холиод уу.'],tips:'Маш өтгөн, сахар хэрэггүй амттай 😋'},
+  {id:5,cat:'coffee',featured:true,badge:'☕ Хит',img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=70',emoji:'☕',name:'Coffee Mocha Shake',time:'6 мин',kcal:340,tags:['Кофе','Мокка'],ingredients:[{name:'Хөргөсөн кофе',amount:100,unit:'мл'},{name:'Сүү',amount:100,unit:'мл'},{name:'Vanilla зайрмаг',amount:80,unit:'г'},{name:'Шоколад сироп',amount:1,unit:'хч'}],steps:['Кофегоо хөргөнө.','Бүх орцыг blender-д хий.','Дээрээс шоколад асга.'],tips:'Espresso байвал бүр сайн!'},
+  {id:6,cat:'protein',img:'https://images.unsplash.com/photo-1622484212850-eb596d769edc?w=500&q=70',emoji:'💪',name:'Protein Shake',time:'4 мин',kcal:350,tags:['Протейн','Бие тамир'],ingredients:[{name:'Сүү',amount:250,unit:'мл'},{name:'Banana',amount:1,unit:'ш'},{name:'Peanut butter',amount:1,unit:'хч'},{name:'Protein powder',amount:1,unit:'scoop'}],steps:['Бүгдийг blender-д хий.','Сайн холиод уу.'],tips:'Protein powder байхгүй бол йогурт нэм.'},
+  {id:7,cat:'exotic',img:'https://images.unsplash.com/photo-1546173159-315724a31696?w=500&q=70',emoji:'🧋',name:'Bubble Boba Shake',time:'10 мин',kcal:380,tags:['Боба','Экзотик'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Vanilla зайрмаг',amount:80,unit:'г'},{name:'Boba pearl',amount:50,unit:'г'},{name:'Сироп',amount:1,unit:'хч'}],steps:['Bobaа чанаж бэлд.','Shake-аа blender-д хий.','Доор boba, дээр shake асга.'],tips:'Straw том байх хэрэгтэй 😄'},
+  {id:8,cat:'choco',img:'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=500&q=70',emoji:'🍫',name:'Choco King',time:'6 мин',kcal:480,tags:['Шоколад','💯'],ingredients:[{name:'Сүү',amount:180,unit:'мл'},{name:'Шоколад зайрмаг',amount:150,unit:'г'},{name:'Шоколад сироп',amount:20,unit:'мл'},{name:'Whipped cream',amount:3,unit:'хч'}],steps:['Сүү, зайрмагийг blender-д хийнэ.','Шоколад сироп нэмж блендрэнэ.','Whipped cream нэмнэ.'],tips:'Аяганы хананд шоколад сироп урсгавал premium харагдана.'},
+  {id:9,cat:'fruity',img:'https://images.unsplash.com/photo-1568921384545-89c83c7eb0e5?w=500&q=70',emoji:'🍓',name:'Pink Lover',time:'5 мин',kcal:270,tags:['Жимс','💕'],ingredients:[{name:'Strawberry',amount:8,unit:'ш'},{name:'Сүү',amount:180,unit:'мл'},{name:'Vanilla зайрмаг',amount:80,unit:'г'},{name:'Мед',amount:10,unit:'г'}],steps:['Strawberry угааж хагална.','Бүгдийг blender-д нэгтгэнэ.'],tips:'ТОП 2 зарагддаг амт!'},
+  {id:10,cat:'coffee',img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=70',emoji:'☕',name:'Coffee Boost',time:'5 мин',kcal:320,tags:['Кофе','⚡'],ingredients:[{name:'Кофе',amount:80,unit:'мл'},{name:'Сүү',amount:150,unit:'мл'},{name:'Зайрмаг',amount:80,unit:'г'}],steps:['Кофег хөргөж авна.','Бүгдийг blender-д нэгтгэнэ.'],tips:'ТОП 3 зарагддаг!'},
+  {id:11,cat:'exotic',img:'https://images.unsplash.com/photo-1638176066959-2e38c5c73aa5?w=500&q=70',emoji:'🥭',name:'Манго Shake',time:'5 мин',kcal:310,tags:['Манго','Зунжин'],ingredients:[{name:'Манго',amount:200,unit:'г'},{name:'Кокосын сүү',amount:150,unit:'мл'},{name:'Зайрмаг',amount:80,unit:'г'}],steps:['Манго хэрчиж блендерт хийнэ.','Кокосын сүү, зайрмаг нэмнэ.'],tips:'Хагас хөлдөөсөн манго ашиглаарай!'},
+  {id:12,cat:'kids',img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=70',emoji:'🌈',name:'Rainbow Shake',time:'8 мин',kcal:360,tags:['Хүүхэд','🎉'],ingredients:[{name:'Vanilla зайрмаг',amount:200,unit:'г'},{name:'Сүү',amount:150,unit:'мл'},{name:'Strawberry сироп',amount:15,unit:'мл'},{name:'Sprinkles',amount:1,unit:'хч'}],steps:['Сүү, зайрмагийг блендрэнэ.','Сиропоор чимэглэнэ.','Sprinkles цацна.'],tips:'Өнгийн straw ашиглаарай!'},
+  {id:13,cat:'fruity',img:'https://images.unsplash.com/photo-1606914501449-5a96b6ce1a99?w=500&q=70',emoji:'🫐',name:'Blueberry Shake',time:'5 мин',kcal:260,tags:['Эрүүл','💜'],ingredients:[{name:'Нил ягод',amount:150,unit:'г'},{name:'Сүү',amount:150,unit:'мл'},{name:'Йогурт',amount:100,unit:'г'}],steps:['Бүгдийг блендерт хийнэ.','Нил ягодоор чимэглэнэ.'],tips:'Хүчтэй антиоксидант!'},
+  {id:14,cat:'protein',img:'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&q=70',emoji:'🥜',name:'Peanut Choco Shake',time:'6 мин',kcal:520,tags:['Протейн','💪'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Шоколад зайрмаг',amount:120,unit:'г'},{name:'Самрын тос',amount:30,unit:'г'},{name:'Banana',amount:1,unit:'ш'}],steps:['Банан зүсэж блендерт хийнэ.','Бусад зүйлийг нэмнэ.','Бүрэн нэгтгэнэ.'],tips:'Протейн нэмэхийн тулд йогурт нэмнэ.'},
+  {id:15,cat:'fruity',img:'',emoji:'🍉',name:'Тарвасны Shake',time:'5 мин',kcal:200,tags:['Зунжин','💦'],ingredients:[{name:'Тарвас',amount:300,unit:'г'},{name:'Лайм шүүс',amount:20,unit:'мл'},{name:'Мед',amount:10,unit:'г'}],steps:['Тарвас үргүйлж хэрчинэ.','Блендерт хийж нэгтгэнэ.'],tips:'Зун тохиромжтой!'}
+,
+  {id:16,cat:'healthy',emoji:'🥗',name:'Жин хасах Shake',time:'5 мин',kcal:80,tags:['Эрүүл','Fat burn','🥗'],ingredients:[{name:'Улаан лооль',amount:1,unit:'ш'},{name:'Өргөст хэмх',amount:1,unit:'ш'},{name:'Лимон шүүс',amount:1,unit:'хч'},{name:'Ус',amount:150,unit:'мл'}],steps:['Лооль, өргөст хэмхийг жижиглэнэ.','Блендерт бүгдийг хийнэ.','20 секунд бутална.','Давс/ус нэмж болно.'],tips:'Калори маш бага. Гэдэс цэвэрлэнэ. Жин хасахад ТОП!'},
+  {id:17,cat:'protein',emoji:'💪',name:'Mass Gain Shake',time:'5 мин',kcal:480,tags:['Протейн','Булчин','💪'],ingredients:[{name:'Банана',amount:1,unit:'ш'},{name:'Peanut butter',amount:2,unit:'хч'},{name:'Сүү',amount:250,unit:'мл'},{name:'Зөгийн бал',amount:1,unit:'хч'}],steps:['Блендерт бүгдийг хийнэ.','Өтгөн болтол блендрэнэ.'],tips:'Калори өндөр. Булчинд сайн. Цатгалан барина.'},
+  {id:18,cat:'coffee',emoji:'☕',name:'Crazy Coffee Shake',time:'5 мин',kcal:320,tags:['Кофе','Energy','😎'],ingredients:[{name:'Хөргөсөн кофе',amount:100,unit:'мл'},{name:'Сүү',amount:100,unit:'мл'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'}],steps:['Бүгдийг blend → 30 сек.'],tips:'Кофе + амт = 🔥. Energy boost. Кафе стиль.'},
+  {id:19,cat:'choco',emoji:'🍫',name:'Chocolate Deluxe',time:'5 мин',kcal:460,tags:['Шоколад','Deluxe','4 орц'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Шоколад зайрмаг',amount:2,unit:'хч'},{name:'Шоколад сироп',amount:1,unit:'хч'},{name:'Банана',amount:0.5,unit:'ш'}],steps:['Блендерт бүгдийг хийнэ.','20–30 секунд бутална.'],tips:'Банана нэмэхээр илүү өтгөн, крем шиг болно 😎'},
+  {id:20,cat:'fruity',emoji:'🍓',name:'Strawberry Sweet',time:'5 мин',kcal:290,tags:['Жимс','Sweet','🍓'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Гүзээлзгэнэ',amount:6,unit:'ш'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'},{name:'Зөгийн бал',amount:1,unit:'хч'}],steps:['Блендерт бүгдийг хийнэ.','Smooth болтол блендрэнэ.'],tips:'Амт илүү зөөлөн, natural болно. Хүүхдэд гоё 🍓'},
+  {id:21,cat:'protein',emoji:'🍌',name:'Banana Peanut Power',time:'5 мин',kcal:420,tags:['Протейн','Булчин','VIP'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Банана',amount:1,unit:'ш'},{name:'Peanut butter',amount:1,unit:'хч'},{name:'Зайрмаг',amount:1,unit:'хч'},{name:'Овьёос',amount:2,unit:'хч'}],steps:['Блендерт бүгдийг хийнэ.','Өтгөн болтол блендрэнэ.'],tips:'Булчин нэмэхэд 💪🔥'},
+  {id:22,cat:'coffee',emoji:'☕',name:'Coffee VIP Shake',time:'5 мин',kcal:380,tags:['Кофе','VIP','⭐'],ingredients:[{name:'Хөргөсөн кофе',amount:100,unit:'мл'},{name:'Сүү',amount:100,unit:'мл'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'},{name:'Шоколад сироп',amount:1,unit:'хч'},{name:'Зөгийн бал/карамель',amount:1,unit:'хч'}],steps:['Блендерт бүгдийг хийнэ.','30 секунд блендрэнэ.'],tips:'Energy + dessert 🔥'},
+  {id:23,cat:'kids',emoji:'🌈',name:'Crazy Colorful VIP',time:'10 мин',kcal:340,tags:['Хүүхэд','Party','🌈'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'},{name:'Гүзээлзгэнэ',amount:3,unit:'ш'},{name:'Нил ягод',amount:3,unit:'хч'},{name:'Сироп/өнгөт topping',amount:1,unit:'хч'}],steps:['Хэсэг хэсгээр blend хийнэ.','Давхарлаж шилэнд хийнэ.'],tips:'Party shake 🎉'},
+  {id:24,cat:'healthy',emoji:'🍅',name:'Улаан Лооль + Перец',time:'5 мин',kcal:90,tags:['Эрүүл','Davслаг','🍅'],ingredients:[{name:'Улаан лооль',amount:2,unit:'ш'},{name:'Улаан перец',amount:0.5,unit:'ш'},{name:'Сармис',amount:1,unit:'хумс'},{name:'Давс',amount:1,unit:'щимхий'},{name:'Олив тос',amount:1,unit:'хч'},{name:'Ус',amount:100,unit:'мл'}],steps:['Лооль, перецийг жижиглэнэ.','Блендерт бүгдийг хийнэ.','20–30 секунд бутална.','Давс/ус нэмж болно.'],tips:'Шингэн салат шиг. Давслаг, шинэхэн амттай. Зун уухад маш гоё.'},
+  {id:25,cat:'choco',emoji:'🍫',name:'Chocolate VIP',time:'5 мин',kcal:500,tags:['Шоколад','VIP','💯'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Шоколад зайрмаг',amount:2,unit:'хч'},{name:'Шоколад сироп',amount:1,unit:'хч'},{name:'Банана',amount:0.5,unit:'ш'},{name:'Peanut butter',amount:1,unit:'хч'}],steps:['Блендерт бүгдийг хийнэ.','Өтгөн болтол блендрэнэ.'],tips:'Маш баялаг, dessert level амт 😎'},
+];
 
-  input.addEventListener('change', function () {
-    const file = input.files[0];
-    if (file) {
-      preview.src = URL.createObjectURL(file);
-    }
+let curCat='all',srchQ='',favs=JSON.parse(localStorage.getItem('mf3')||'[]'),myR=JSON.parse(localStorage.getItem('mm3')||'[]'),curR=null,srv=2,eId=null,sEm='🥤',sCv='classic',curPhoto='';
+const EMOJIS=['🥤','🍓','🍫','🍦','🥭','🍌','🌿','🫐','🍒','☕','🧋','💪','🌺','🌈','🍬','🥜','🍇','🍋','🍍','🍑'];
+function all(){return[...R,...myR]}
+function sF(){localStorage.setItem('mf3',JSON.stringify(favs))}
+function sM(){localStorage.setItem('mm3',JSON.stringify(myR))}
+function img(r){return r.img||'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=60'}
+
+// CAMERA - main page
+document.getElementById('camMain').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const prev=document.getElementById('prevMain');
+  prev.src=URL.createObjectURL(file);prev.style.display='block';
+});
+
+// CAMERA - add form
+document.getElementById('fCam').addEventListener('change',function(){
+  const file=this.files[0  ,{id:26,cat:'classic',featured:true,badge:'👑 VIP',emoji:'👑',name:'Golden Dream VIP',time:'6 мин',kcal:480,tags:['VIP','Онцгой','👑 Signature'],ingredients:[{name:'Сүү',amount:200,unit:'мл'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'},{name:'Банана',amount:0.5,unit:'ш'},{name:'Карамель/зөгийн бал',amount:1,unit:'хч'},{name:'Peanut butter',amount:1,unit:'хч'},{name:'Давс',amount:1,unit:'щимхий'}],steps:['Бүх орцыг blender-д хийнэ.','30–40 секунд өтгөн болтол blend хийнэ.','Шилэнд хийж дээрээс карамель дусааж чимэглэнэ.'],tips:'Амт: Чихэрлэг + давслаг + кремтэй. Texture: Маш өтгөн, кафе стиль. 10k–15k₮ зарж болно!'}
+  ,{id:27,cat:'exotic',emoji:'🥥',name:'Кокос Shake',time:'5 мин',kcal:310,tags:['Экзотик','Зунжин','🥥'],ingredients:[{name:'Кокосын сүү',amount:200,unit:'мл'},{name:'Ваниль зайрмаг',amount:2,unit:'хч'},{name:'Мед',amount:1,unit:'хч'},{name:'Мөс',amount:4,unit:'ш'}],steps:['Бүх орцыг блендерт хийнэ.','Smooth болтол блендрэнэ.','Кокос үртэй чимэглэнэ.'],tips:'Кокосын сүүний оронд кокос усыг ашиглахад илүү хөнгөн болно!'}
+];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{curPhoto=e.target.result;const p=document.getElementById('fprev');p.src=curPhoto;p.style.display='block';};
+  reader.readAsDataURL(file);
+});
+
+// CALORIE quick calc
+function calcCal(){
+  const k=document.getElementById('calType').value;
+  const el=document.getElementById('calResult');
+  el.style.display='block';
+  el.innerHTML=`🔥 <strong>${k} kcal</strong> — нэг шил shake`;
+}
+
+function rGrid(recs,tid,mine=false){
+  const el=document.getElementById(tid);
+  if(!recs.length){el.innerHTML='';return}
+  const grads={'classic':'linear-gradient(135deg,#fce7d6,#f5c4a1)','choco':'linear-gradient(135deg,#5c2d0e,#a0522d)','fruity':'linear-gradient(135deg,#ffe0e6,#ff8fa3)','coffee':'linear-gradient(135deg,#c8a07a,#6f4e37)','protein':'linear-gradient(135deg,#d4f0d4,#5a9a5a)','exotic':'linear-gradient(135deg,#fff0c0,#ffb347)','kids':'linear-gradient(135deg,#e8d5f5,#c084fc)','healthy':'linear-gradient(135deg,#c8f5c8,#3a9a3a)'};
+  const g=r=>r.id===15?'linear-gradient(135deg,#a8e063,#56ab2f)':r.id===26?'linear-gradient(135deg,#ffd700,#c8860a)':grads[r.cat]||'linear-gradient(135deg,#f0e6d8,#e6634a)';
+  el.innerHTML=recs.map((r,i)=>`
+    <div class="rc" style="animation-delay:${i*0.04}s" data-id="${r.id}">
+      <div class="rc-img" style="background:${g(r)}">${r.img&&r.img.startsWith('data:')?`<img src="${r.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:16px 16px 0 0">`:''}
+        <span style="font-size:48px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.15))">${r.emoji}</span>
+      </div>
+      <button class="rc-fav" onclick="event.stopPropagation();tFav(${r.id})" id="fv${r.id}${tid}">${favs.includes(r.id)?'❤️':'🤍'}</button>
+      <div class="rc-b"><div class="rc-name">${r.name}</div><div class="rc-meta"><span>⏱ ${r.time}</span><span>🔥 ${r.kcal}кк</span></div></div>
+      ${mine?`<div class="macts"><button class="mact" onclick="event.stopPropagation();eR('${r.id}')">✏️</button><button class="mact del" onclick="event.stopPropagation();dR('${r.id}')">🗑</button></div>`:''}
+    </div>`).join('');
+  el.querySelectorAll('[data-id]').forEach(card=>{
+    card.addEventListener('click',function(){const rec=all().find(x=>String(x.id)===this.dataset.id);if(rec)oRO(rec);});
   });
+}
 
-  // CALORIES
-  function calc() {
-    const kcal = document.getElementById("type").value;
-    document.getElementById("result").innerText =
-      "🔥 " + kcal + " kcal";
-  }
+function rFeat(){
+  const fg={'classic':'linear-gradient(135deg,#fce7d6,#f5c4a1)','choco':'linear-gradient(135deg,#5c2d0e,#a0522d)','fruity':'linear-gradient(135deg,#ffe0e6,#ff8fa3)','coffee':'linear-gradient(135deg,#c8a07a,#6f4e37)','protein':'linear-gradient(135deg,#d4f0d4,#5a9a5a)','exotic':'linear-gradient(135deg,#fff0c0,#ffb347)','kids':'linear-gradient(135deg,#e8d5f5,#c084fc)','healthy':'linear-gradient(135deg,#c8f5c8,#3a9a3a)'};
+  document.getElementById('FG').innerHTML=R.filter(r=>r.featured).map(r=>`
+    <div class="fc" onclick="oR(${r.id})">
+      <div class="fc-img" style="background:${r.id===15?'linear-gradient(135deg,#a8e063,#56ab2f)':fg[r.cat]||'linear-gradient(135deg,#f0e6d8,#e6634a)'}">
+        <span style="font-size:54px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.15))">${r.emoji}</span>
+      </div>
+      ${r.badge?`<span class="fc-badge">${r.badge}</span>`:''}
+      <button class="fc-fav" onclick="event.stopPropagation();tFav(${r.id})" id="ff${r.id}">${favs.includes(r.id)?'❤️':'🤍'}</button>
+      <div class="fc-body"><div class="fc-name">${r.emoji} ${r.name}</div><div class="fc-meta"><span>⏱ ${r.time}</span><span>🔥 ${r.kcal}кк</span></div></div>
+    </div>`).join('');
+}
+
+function gFil(){return all().filter(r=>(curCat==='all'||r.cat===curCat)&&(!srchQ||r.name.toLowerCase().includes(srchQ.toLowerCase())))}
+function fC(btn){document.querySelectorAll('.cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');curCat=btn.dataset.cat;document.getElementById('AT').textContent=curCat==='all'?'Бүх жор':btn.textContent.trim()+' жорууд';rGrid(gFil(),'RG');}
+
+function tFav(id){if(favs.includes(id))favs=favs.filter(f=>f!==id);else favs.push(id);sF();document.querySelectorAll(`[id^="fv${id}"]`).forEach(e=>e.textContent=favs.includes(id)?'❤️':'🤍');if(document.getElementById('page-favs').classList.contains('active'))rFavs();}
+function rFavs(){const fr=all().filter(r=>favs.includes(r.id));rGrid(fr,'FVG');document.getElementById('FVE').style.display=fr.length?'none':'block';}
+
+function oR(id){const r=all().find(x=>x.id===id);if(r)oRO(r);}
+function oRO(r){curR=r;srv=2;document.getElementById('SN').textContent=2;const mg={'classic':'linear-gradient(135deg,#fce7d6,#f5c4a1)','choco':'linear-gradient(135deg,#5c2d0e,#a0522d)','fruity':'linear-gradient(135deg,#ffe0e6,#ff8fa3)','coffee':'linear-gradient(135deg,#c8a07a,#6f4e37)','protein':'linear-gradient(135deg,#d4f0d4,#5a9a5a)','exotic':'linear-gradient(135deg,#fff0c0,#ffb347)','kids':'linear-gradient(135deg,#e8d5f5,#c084fc)','healthy':'linear-gradient(135deg,#c8f5c8,#3a9a3a)'};
+  const mEl=document.getElementById('mI');
+  if(r.img&&r.img.startsWith('data:')){mEl.style.background='none';mEl.innerHTML=`<img src="${r.img}" style="width:100%;height:180px;object-fit:cover">`;}
+  else{mEl.style.background=(r.id===15?'linear-gradient(135deg,#a8e063,#56ab2f)':r.id===26?'linear-gradient(135deg,#ffd700,#c8860a)':mg[r.cat]||'linear-gradient(135deg,#f0e6d8,#e6634a)');mEl.innerHTML=`<span style="font-size:90px;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.2))">${r.emoji}</span>`;}document.getElementById('mT').textContent=r.emoji+' '+r.name;document.getElementById('mTG').innerHTML=(r.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');rI();document.getElementById('mST').innerHTML=r.steps.map((s,i)=>`<div class="step"><div class="stn">${i+1}</div><div class="stt">${s}</div></div>`).join('');document.getElementById('mTP').innerHTML=`<div class="tt">💡 ЗӨВЛӨГӨӨ</div><div class="tb">${r.tips||''}</div>`;document.getElementById('RO').classList.add('open');document.body.style.overflow='hidden';}
+function rI(){document.getElementById('mIG').innerHTML=curR.ingredients.map(i=>{const a=i.amount*srv/2;return`<div class="ii"><span class="in">${i.name}</span><span class="ia">${a%1===0?a:a.toFixed(1)} ${i.unit}</span></div>`}).join('');}
+function cS(d){srv=Math.max(1,Math.min(20,srv+d));document.getElementById('SN').textContent=srv;rI();}
+function cRM(e){if(e.target===document.getElementById('RO')){document.getElementById('RO').classList.remove('open');document.body.style.overflow='';}}
+
+function rMine(){const el=document.getElementById('MG'),em=document.getElementById('ME');if(!myR.length){el.innerHTML='';em.style.display='block';return;}em.style.display='none';rGrid(myR,'MG',true);}
+function openAdd(rec=null){eId=rec?rec.id:null;sEm=rec?rec.emoji:'🥤';sCv=rec?rec.cat:'classic';curPhoto=rec&&rec.img&&rec.img.startsWith('data:')?rec.img:'';const fp=document.getElementById('fprev');fp.src=curPhoto;fp.style.display=curPhoto?'block':'none';document.getElementById('fCam').value='';document.getElementById('FT').textContent=rec?'✏️ Жор засах':'✨ Жор нэмэх';document.getElementById('fN').value=rec?rec.name:'';document.getElementById('fTm').value=rec?rec.time:'';document.getElementById('fK').value=rec?rec.kcal:'';document.getElementById('fTP').value=rec?(rec.tips||''):'';document.getElementById('EG').innerHTML=EMOJIS.map(e=>`<button class="eopt${e===sEm?' sel':''}" onclick="pE('${e}',this)">${e}</button>`).join('');document.querySelectorAll('.fcat').forEach(b=>b.classList.toggle('active',b.dataset.cat===sCv));document.getElementById('IR').innerHTML='';iC=0;(rec?rec.ingredients:[{name:'',amount:'',unit:'мл'}]).forEach(i=>aIR(i));document.getElementById('SR').innerHTML='';sC=0;(rec?rec.steps:['']).forEach(s=>aSR(s));document.getElementById('AO').classList.add('open');document.body.style.overflow='hidden';}
+function cAO(){document.getElementById('AO').classList.remove('open');document.body.style.overflow='';}
+function cAM(e){if(e.target===document.getElementById('AO'))cAO();}
+function pE(e,btn){sEm=e;document.querySelectorAll('.eopt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function sCat(btn){document.querySelectorAll('.fcat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');sCv=btn.dataset.cat;}
+let iC=0;
+function aIR(i={name:'',amount:'',unit:'мл'}){const id='i'+(++iC);const d=document.createElement('div');d.className='irow';d.id=id;const val=i.name?(i.name+(i.amount?' – '+i.amount+(i.unit?' '+i.unit:''):'')):'';d.innerHTML=`<input type="text" placeholder="Жш: Сүү – 200 мл" value="${val}"><button class="dbtn" onclick="document.getElementById('${id}').remove()">✕</button>`;document.getElementById('IR').appendChild(d);}
+let sC=0;
+function aSR(t=''){const id='s'+(++sC);const d=document.createElement('div');d.className='strow';d.id=id;const n=document.getElementById('SR').children.length+1;d.innerHTML=`<div class="stnb">${n}</div><textarea rows="2" placeholder="Алхам ${n}...">${t}</textarea><button class="dbtn" onclick="document.getElementById('${id}').remove()">✕</button>`;document.getElementById('SR').appendChild(d);}
+
+function saveR(){const name=document.getElementById(‘fN’).value.trim();if(!name){document.getElementById(‘fN’).style.borderColor=’#e6634a’;return;}document.getElementById(‘fN’).style.borderColor=’’;const ings=[…document.querySelectorAll(’#IR .irow’)].map(row=>{const v=row.querySelector(‘input’).value.trim();if(!v)return null;const parts=v.split(’–’).map(s=>s.trim());const name=parts[0]||v;const rest=parts[1]||’’;const m=rest.match(/^([\d.]+)?\s*(.*)$/);return{name,amount:parseFloat(m&&m[1])||0,unit:(m&&m[2])||‘мл’};}).filter(i=>i&&i.name);const steps=[…document.querySelectorAll(’#SR textarea’)].map(t=>t.value.trim()).filter(Boolean);const rec={id:eId||(‘u’+Date.now()),emoji:sEm,name,cat:sCv,time:document.getElementById(‘fTm’).value.trim()||’–’,kcal:parseInt(document.getElementById(‘fK’).value)||0,tags:[‘Миний жор’,‘⭐’],img:curPhoto||‘https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&q=60’,ingredients:ings.length?ings:[{name:‘Материал нэмээгүй’,amount:0,unit:’’}],steps:steps.length?steps:[‘Алхам нэмээгүй’],tips:document.getElementById(‘fTP’).value.trim()||’’};if(eId){const idx=myR.findIndex(r=>r.id===eId);if(idx>=0)myR[idx]=rec;}else myR.unshift(rec);sM();rMine();cAO();toast(eId?‘✅ Жор шинэчлэгдлээ!’:‘🎉 Жор нэмэгдлээ!’);}
+function eR(id){const r=myR.find(x=>x.id===id);if(r)openAdd(r);}
+function dR(id){if(!confirm(‘Устгах уу?’))return;myR=myR.filter(r=>r.id!==id);sM();rMine();toast(‘🗑 Устгагдлаа’);}
+function calcSize(){const p=parseInt(document.getElementById(‘cP’).value)||1,m=parseInt(document.getElementById(‘cM’).value)||0,ic=parseInt(document.getElementById(‘cI’).value)||0,f=parseInt(document.getElementById(‘cF’).value)||0,el=document.getElementById(‘CR’);el.style.display=‘block’;el.innerHTML=`🥛 Сүү: <strong>${m*p} мл</strong><br>🍨 Зайрмаг: <strong>${ic*p} г</strong><br>🍓 Жимс: <strong>${f*p} г</strong><br>👥 Хүн: <strong>${p}</strong>`;}
+function calcNut(){const m=parseInt(document.getElementById(‘nM’).value)||0,ic=parseInt(document.getElementById(‘nI’).value)||0,f=parseInt(document.getElementById(‘nF’).value)||0,s=parseInt(document.getElementById(‘nS’).value)||0,k=Math.round(m*0.61+ic*2.1+f*0.6+s*2.6),pr=(m*0.033+ic*0.035).toFixed(1),fa=(m*0.032+ic*0.11).toFixed(1),ca=(m*0.047+ic*0.23+f*0.12+s*0.7).toFixed(1),el=document.getElementById(‘NR’);el.style.display=‘block’;el.innerHTML=`🔥 Илчлэг: <strong>${k} ккал</strong><br>💪 Уураг: <strong>${pr} г</strong><br>🧈 Өөх тос: <strong>${fa} г</strong><br>🍞 Нүүрс ус: <strong>${ca} г</strong>`;}
+function gP(p){document.querySelectorAll(’.page’).forEach(x=>x.classList.remove(‘active’));document.querySelectorAll(’.nb’).forEach(b=>b.classList.remove(‘active’));document.getElementById(‘page-’+p).classList.add(‘active’);document.getElementById(‘nav-’+p).classList.add(‘active’);if(p===‘favs’)rFavs();if(p===‘mine’)rMine();}
+function toast(msg){const t=document.getElementById(‘toast’);t.textContent=msg;t.style.opacity=‘1’;clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity=‘0’,2200);}
+const mf={name:‘Milkshake’,short_name:‘Milkshake’,display:‘standalone’,start_url:’./’,background_color:’#f0e6d8’,theme_color:’#e6634a’,icons:[{src:“data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23e6634a'/><text y='140' x='16' font-size='140'>🥤</text></svg>”,sizes:‘192x192’,type:‘image/svg+xml’}]};
+const mb=new Blob([JSON.stringify(mf)],{type:‘application/json’}),ml=document.createElement(‘link’);ml.rel=‘manifest’;ml.href=URL.createObjectURL(mb);document.head.appendChild(ml);
+rFeat();rGrid(R,‘RG’);
 </script>
 
 </body>
