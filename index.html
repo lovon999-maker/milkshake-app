@@ -3,71 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milkshake Жор</title>
+<title>Milkshake Ultimate</title>
 
 <style>
-body {
-  margin:0;
-  font-family: sans-serif;
-  background: linear-gradient(180deg,#fff8f0,#ffeadd);
-}
-
-.header {
-  background:#e8634a;
-  color:white;
-  padding:20px;
-  font-size:24px;
-  font-weight:bold;
-}
-
-.card {
-  background:white;
-  margin:10px;
-  padding:15px;
-  border-radius:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-.title {
-  font-size:18px;
-  font-weight:bold;
-}
-
-.kcal {
-  color:#e8634a;
-  margin-top:5px;
-}
+body{margin:0;font-family:sans-serif;background:#fff6ef;}
+.header{background:#e8634a;color:#fff;padding:15px;text-align:center;font-weight:bold;}
+.page{display:none;padding:10px;}
+.active{display:block;}
+.card{background:#fff;border-radius:12px;padding:10px;margin-bottom:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.img-row{display:flex;gap:8px;overflow-x:auto;}
+.img-row img{height:120px;border-radius:10px;}
+input,textarea{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ddd;}
+button{padding:10px;border:none;background:#e8634a;color:#fff;border-radius:8px;width:100%;}
+.bottom{position:fixed;bottom:0;width:100%;display:flex;background:#fff;border-top:1px solid #ddd;}
+.btn{flex:1;padding:12px;text-align:center;}
+.btn.active{color:#e8634a;font-weight:bold;}
+.heart{float:right;cursor:pointer;font-size:18px;}
 </style>
 </head>
 
 <body>
 
-<div class="header">🥤 Milkshake Жор</div>
+<div class="header">🥤 Milkshake Ultimate</div>
 
+<!-- MENU -->
+<div id="menu" class="page active"></div>
+
+<!-- ADD -->
+<div id="add" class="page">
 <div class="card">
-<div class="title">🍫 Шоколадтай Milkshake</div>
-<div class="kcal">🔥 450 kcal</div>
+<h3>➕ Шинэ shake</h3>
+<input id="name" placeholder="Нэр">
+<textarea id="imgs" placeholder="Зургийн link-үүд (таслалаар)"></textarea>
+<textarea id="ing" placeholder="Орц"></textarea>
+<button onclick="addShake()">Нэмэх</button>
+</div>
 </div>
 
+<!-- FAVORITE -->
+<div id="fav" class="page"></div>
+
+<!-- CALCULATOR -->
+<div id="calc" class="page">
 <div class="card">
-<div class="title">🍓 Гүзээлзгэний Milkshake</div>
-<div class="kcal">🔥 300 kcal</div>
+<h3>🧮 Илчлэг тооцоолол</h3>
+
+<input id="milk" placeholder="Сүү (мл)">
+<input id="ice" placeholder="Зайрмаг (г)">
+<input id="fruit" placeholder="Жимс (г)">
+<input id="syrup" placeholder="Сироп (мл)">
+
+<button onclick="calcCal()">Бодох</button>
+<div id="result"></div>
+
+</div>
 </div>
 
-<div class="card">
-<div class="title">🍌 Банантай Milkshake</div>
-<div class="kcal">🔥 320 kcal</div>
+<!-- NAV -->
+<div class="bottom">
+<div class="btn active" onclick="openPage('menu',this)">🍹</div>
+<div class="btn" onclick="openPage('add',this)">➕</div>
+<div class="btn" onclick="openPage('fav',this)">❤️</div>
+<div class="btn" onclick="openPage('calc',this)">🧮</div>
 </div>
 
+<script>
+
+// DATA FIX
+let saved = localStorage.getItem("data");
+let data;
+
+if(saved){
+  data = JSON.parse(saved);
+}else{
+  data = [
+    {
+      name:"🍫 Chocolate",
+      imgs:[
+        "https://images.unsplash.com/photo-1572490122747-3968b75cc699",
+        "https://images.unsplash.com/photo-1551024709-8f23befc6f87"
+      ],
+      ing:"Сүү, шоколад, зайрмаг",
+      fav:false
+    }
+  ];
+  localStorage.setItem("data", JSON.stringify(data));
+}
+
+// SAVE
+function save(){
+  localStorage.setItem("data", JSON.stringify(data));
+}
+
+// RENDER
+function render(){
+document.getElementById("menu").innerHTML =
+data.map((d,i)=>`
 <div class="card">
-<div class="title">🫐 Нэрсний Milkshake</div>
-<div class="kcal">🔥 280 kcal</div>
+
+<div class="img-row">
+${(d.imgs||[]).map(img=>`<img src="${img}">`).join("")}
 </div>
 
-<div class="card">
-<div class="title">🥭 Манго Milkshake</div>
-<div class="kcal">🔥 310 kcal</div>
+<h3>${d.name}
+<span class="heart" onclick="toggleFav(${i})">
+${d.fav?"❤️":"🤍"}
+</span>
+</h3>
+
+<p>${d.ing}</p>
+
 </div>
+`).join("");
+
+document.getElementById("fav").innerHTML =
+data.filter(d=>d.fav).map(d=>`
+<div class="card">
+<div class="img-row">
+${(d.imgs||[]).map(img=>`<img src="${img}">`).join("")}
+</div>
+<h3>${d.name}</h3>
+</div>
+`).join("") || "Хоосон";
+}
+
+// ADD
+function addShake(){
+const name = document.getElementById("name").value;
+const imgs = document.getElementById("imgs").value.split(",");
+const ing = document.getElementById("ing").value;
+
+if(!name) return alert("Нэр оруул!");
+
+data.push({name,imgs,ing,fav:false});
+save();
+render();
+
+document.getElementById("name").value="";
+document.getElementById("imgs").value="";
+document.getElementById("ing").value="";
+}
+
+// FAVORITE
+function toggleFav(i){
+data[i].fav=!data[i].fav;
+save();
+render();
+}
+
+// CALORIES
+function calcCal(){
+const milk=parseFloat(document.getElementById("milk").value)||0;
+const ice=parseFloat(document.getElementById("ice").value)||0;
+const fruit=parseFloat(document.getElementById("fruit").value)||0;
+const syrup=parseFloat(document.getElementById("syrup").value)||0;
+
+const kcal = milk*0.64 + ice*2.1 + fruit*0.5 + syrup*2.8;
+
+document.getElementById("result").innerHTML =
+"🔥 "+Math.round(kcal)+" kcal";
+}
+
+// NAV
+function openPage(id,el){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+
+document.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
+}
+
+// START
+render();
+
+</script>
 
 </body>
 </html>
